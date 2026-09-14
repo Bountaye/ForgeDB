@@ -40,3 +40,6 @@ CMakeUserPresets.json
 append.compacting
 .DS_Store
 Thumbs.db
+
+# Persistent local demo databases
+.demo-data/

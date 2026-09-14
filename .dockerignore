@@ -10,3 +10,5 @@ docs/resume.md
 docs/validation
 .env
 .env.*
+
+.demo-data/

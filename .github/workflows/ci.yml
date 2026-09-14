@@ -37,6 +37,9 @@ jobs:
         run: cmake --build build --parallel 4
       - name: Test
         run: ctest --test-dir build --output-on-failure
+      - name: ForgeBoard demo integration
+        if: matrix.sanitizer == ''
+        run: python3 examples/forgeboard/test_demo.py --server build/forgedb-server
       - name: Preserve test diagnostics
         if: failure()
         uses: actions/upload-artifact@v4
@@ -50,6 +53,8 @@ jobs:
       - run: cmake -S . -B build -A x64
       - run: cmake --build build --config Release --parallel 4
       - run: ctest --test-dir build -C Release --output-on-failure
+      - name: ForgeBoard demo integration
+        run: python examples/forgeboard/test_demo.py --server build/Release/forgedb-server.exe
   container:
     runs-on: ubuntu-22.04
     steps:

@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="demo-token" content="__TOKEN__">
+<title>ForgeBoard · A ForgeDB demo</title>
+<style>
+:root{color-scheme:light;--ink:#172c30;--muted:#5b706e;--paper:#f3f4ee;--line:#d9dfd6;--green:#1e594b;--orange:#c44c27}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.5 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+button,input{font:inherit}button{cursor:pointer;border:1px solid var(--line);border-radius:8px;padding:10px 14px;background:white;color:var(--ink);font-weight:600;transition:background .15s,transform .15s}button:hover{background:#e9eee6}button:active{transform:translateY(1px)}button:disabled{cursor:wait;opacity:.5}button:focus-visible,input:focus-visible{outline:3px solid #deac4d;outline-offset:3px}
+header{border-bottom:1px solid var(--line);background:#fafbf6}.nav{max-width:1240px;margin:auto;padding:21px 32px;display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{display:flex;align-items:center;gap:12px;font-size:19px;font-weight:750;letter-spacing:-.7px}.mark{display:grid;place-items:center;width:35px;height:35px;border-radius:9px;background:var(--ink);color:#d4ed96;font:700 21px monospace}.nav-note{font:11px ui-monospace,monospace;letter-spacing:1px;color:var(--muted)}
+main{max-width:1240px;margin:auto;padding:44px 32px}.eyebrow{text-transform:uppercase;letter-spacing:2px;font:600 11px ui-monospace,monospace;color:var(--green)}.hero{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:29px}h1{font-size:clamp(30px,4vw,46px);letter-spacing:-2px;line-height:1.12;margin:12px 0}p{color:var(--muted);margin:8px 0}.hero p{max-width:670px}.status{white-space:nowrap;background:#e4eddd;color:var(--green);border:1px solid #cfdec5;border-radius:24px;padding:8px 13px;font-size:12px;font-weight:650}.status.offline{background:#f8e4df;color:#963d27}.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:currentColor;margin-right:7px}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fafbf7;margin-bottom:26px}.metric{padding:20px 24px;border-right:1px solid var(--line)}.metric:last-child{border:0}.metric-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1.1px}.metric-value{font-size:29px;letter-spacing:-1px;font-weight:600;margin:2px 0}.metric-note{font-size:11px;color:var(--muted)}
+.layout{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:24px;align-items:start}.panel{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden}.panel-top{padding:22px 24px 18px;display:flex;justify-content:space-between;gap:12px;align-items:center;border-bottom:1px solid #edf0e9}h2{font-size:18px;margin:0;letter-spacing:-.5px}.tag{font:10px ui-monospace,monospace;border:1px solid var(--line);padding:4px 7px;border-radius:5px;color:var(--muted);white-space:nowrap}.sub{font-size:12px;margin:4px 0 0}
+.task-form{display:flex;gap:8px;padding:20px 24px 12px}.task-form input{width:100%;min-width:0;border:1px solid var(--line);border-radius:8px;padding:12px;background:#fafbf8;font-size:13px}.primary{background:var(--green);border-color:var(--green);color:white}.primary:hover{background:#28705d}.tasks{list-style:none;margin:0;padding:0 24px 16px}.task{display:flex;align-items:center;gap:12px;padding:16px 0;border-bottom:1px solid #edf0e9}.task:last-child{border:0}.check{width:24px;height:24px;flex:0 0 auto;padding:0;border-radius:6px;font-size:14px}.done .check{background:#e6eee0;color:var(--green);border-color:#c5d5b8}.task-title{flex:1;overflow-wrap:anywhere;font-size:14px}.done .task-title{color:#7a8680;text-decoration:line-through}.remove{border:0;padding:3px 7px;color:#89938d;font-size:18px;background:transparent}.empty{padding:22px 0;color:var(--muted);font-size:13px}.board-footer{padding:14px 24px;background:#fafbf7;border-top:1px solid var(--line);font-size:11px;color:var(--muted);display:flex;justify-content:space-between;gap:8px}
+.lab{padding:0 24px}.experiment{padding:20px 0;border-bottom:1px solid #edf0e9}.experiment:last-child{border-bottom:0}.experiment-title{display:flex;align-items:center;justify-content:space-between;gap:10px}.experiment h3{font-size:14px;margin:0}.experiment p{font-size:12px;margin:6px 0 12px}.actions{display:flex;gap:7px;flex-wrap:wrap}.actions button{font-size:12px;padding:8px 11px}.presence{font:11px ui-monospace,monospace;color:var(--green)}.danger{color:var(--orange)}.trace{margin-top:24px;background:#162e2c;border-color:#162e2c;color:#edf6e6}.trace .panel-top{border-color:#345049;padding:18px 24px}.trace h2{font-size:14px}.trace .tag{border-color:#456058;color:#bdcfbb}.trace-body{padding:18px 24px;min-height:142px}.trace-message{margin:0 0 12px;font-size:13px;color:#d5e5ca}pre{white-space:pre-wrap;overflow-wrap:anywhere;margin:0;color:#a8c29d;font:11px/1.8 ui-monospace,SFMono-Regular,Consolas,monospace}
+.notice{font-size:13px;padding:12px 16px;margin-bottom:18px;border:1px solid #e6a88f;background:#fff0e8;border-radius:8px;color:#8d341d}.notice[hidden]{display:none}footer{display:flex;justify-content:space-between;gap:12px;margin-top:27px;font-size:11px;color:var(--muted)}footer code{font-size:11px}.hint{font-size:11px;margin-top:13px;color:var(--muted)}
+@media(max-width:800px){.layout{grid-template-columns:1fr}.hero{align-items:flex-start;flex-direction:column}.metrics{grid-template-columns:repeat(2,1fr)}.metric:nth-child(2){border-right:0}.metric:nth-child(-n+2){border-bottom:1px solid var(--line)}main{padding:28px 18px}.nav{padding:16px 18px}.nav-note{font-size:9px}footer{flex-direction:column}}
+@media(prefers-reduced-motion:reduce){button{transition:none}}
+</style>
+</head>
+<body>
+<header><div class="nav"><div class="brand"><span class="mark" aria-hidden="true">F</span>ForgeBoard</div><span class="nav-note">BUILT ON FORGEDB / LIVE DEMO</span></div></header>
+<main>
+<div class="hero"><div><div class="eyebrow">Small board. Real database.</div><h1>Put persistence to the test.</h1><p>A task board with a systems lab attached. Make a change, send concurrent writes, or crash the database. See what survives.</p></div><div id="connection" class="status"><span class="dot"></span>Connecting</div></div>
+<div id="error" class="notice" role="alert" hidden></div>
+<section class="metrics" aria-label="Live database metrics">
+<div class="metric"><div class="metric-label">Saved tasks</div><div id="task-count" class="metric-value">—</div><div id="completed" class="metric-note">Reading from ForgeDB</div></div>
+<div class="metric"><div class="metric-label">Atomic counter</div><div id="counter" class="metric-value">—</div><div class="metric-note">Try 8 concurrent clients below</div></div>
+<div class="metric"><div class="metric-label">Append-only log</div><div id="aof" class="metric-value">—</div><div class="metric-note">Actual bytes reported by INFO</div></div>
+<div class="metric"><div class="metric-label">Durability</div><div id="durability" class="metric-value">—</div><div class="metric-note">Disk sync before acknowledgment</div></div>
+</section>
+<div class="layout">
+<div>
+<section class="panel"><div class="panel-top"><div><h2>Your working board</h2><p class="sub">Tasks are JSON strings stored in ForgeDB.</p></div><span class="tag">SET · GET · DEL</span></div>
+<form id="task-form" class="task-form"><input id="title" aria-label="New task title" placeholder="What will you build next?" maxlength="120" required autocomplete="off"><button class="primary" type="submit">Add</button></form>
+<ul id="tasks" class="tasks"><li class="empty">Loading your board…</li></ul>
+<div class="board-footer"><span id="revision">Revision —</span><span>Changes commit with MULTI / EXEC</span></div>
+</section>
+<section class="panel trace" aria-label="Latest operation"><div class="panel-top"><h2>Under the hood</h2><span id="trace-time" class="tag">COMMAND TRACE</span></div><div class="trace-body" aria-live="polite"><p id="trace-message" class="trace-message">Choose an action to see the commands behind it.</p><pre id="trace">Browser → Python HTTP bridge → TCP / RESP → ForgeDB → AOF</pre></div></section>
+<p class="hint">Open a second tab to see the same saved board. Both tabs read the database every second.</p>
+</div>
+<section class="panel"><div class="panel-top"><div><h2>Try the engine</h2><p class="sub">Real operations, visible results.</p></div><span class="tag">SYSTEMS LAB</span></div>
+<div class="lab">
+<div class="experiment"><div class="experiment-title"><h3>01 &nbsp; Expiring presence</h3><span id="presence" class="presence">Offline</span></div><p>Check in for 15 seconds. Watch the key expire, or pin it with PERSIST.</p><div class="actions"><button data-action="presence">Check in · 15s</button><button data-action="persist">Pin presence</button><button data-action="clear">Clear</button></div></div>
+<div class="experiment"><h3>02 &nbsp; Concurrent writes</h3><p>Eight independent TCP clients each send 25 INCR commands. Every returned counter value is checked.</p><div class="actions"><button data-action="traffic">Send 200 increments ↗</button></div></div>
+<div class="experiment"><h3>03 &nbsp; Crash &amp; recover</h3><p>Force-stop this demo’s database, replay its log, and verify every task, revision, and counter.</p><div class="actions"><button class="danger" data-action="restart">Crash &amp; restart</button></div></div>
+<div class="experiment"><h3>04 &nbsp; Compact the log</h3><p>Rewrite the AOF with current live state. Try this after a few rounds of counter updates.</p><div class="actions"><button data-action="compact">Run compaction</button></div></div>
+</div></section>
+</div>
+<footer><span id="endpoint">ForgeDB · C++20 · RESP over TCP</span><span>Local demo · Dedicated data directory · No external services</span></footer>
+</main>
+<script>
+"use strict";
+const $ = id => document.getElementById(id);
+const token = document.querySelector('meta[name="demo-token"]').content;
+let busy = false, polling = false, generation = 0, renderedTasks = "";
+const number = value => Number(value).toLocaleString();
+function showError(message) { $("error").textContent = message; $("error").hidden = !message; }
+function setBusy(value) {
+  busy = value;
+  document.querySelectorAll("button").forEach(button => { button.disabled = value; });
+}
+async function request(path, body) {
+  const response = await fetch(path, body === undefined ? {cache: "no-store"} : {
+    method: "POST", headers: {"Content-Type": "application/json", "X-Demo-Token": token},
+    body: JSON.stringify(body)
+  });
+  const data = await response.json();
+  if (!response.ok) throw new Error(data.error || "Request failed");
+  return data;
+}
+function render(state) {
+  $("connection").className = "status";
+  $("connection").replaceChildren();
+  const dot = document.createElement("span"); dot.className = "dot";
+  $("connection").append(dot, document.createTextNode("ForgeDB connected"));
+  $("task-count").textContent = number(state.tasks.length);
+  $("completed").textContent = state.tasks.filter(task => task.done).length + " completed";
+  $("counter").textContent = number(state.counter);
+  const bytes = Number(state.info.aof_bytes);
+  $("aof").textContent = bytes < 1024 ? bytes + " B" : (bytes / 1024).toFixed(1) + " KB";
+  $("durability").textContent = state.info.fsync_policy;
+  $("revision").textContent = "Revision " + number(state.revision);
+  $("presence").textContent = state.ttl === -2 ? "Offline" : state.ttl === -1 ? "Pinned · no TTL" : "Online · " + state.ttl + "s";
+  $("endpoint").textContent = "ForgeDB · 127.0.0.1:" + state.database_port + " · RESP over TCP";
+  const serialized = JSON.stringify(state.tasks);
+  if (serialized === renderedTasks) return;
+  renderedTasks = serialized;
+  $("tasks").replaceChildren();
+  if (!state.tasks.length) {
+    const empty = document.createElement("li"); empty.className = "empty";
+    empty.textContent = "A clean slate. Add your first task above."; $("tasks").append(empty);
+  }
+  state.tasks.forEach(task => {
+    const row = document.createElement("li"); row.className = "task" + (task.done ? " done" : "");
+    const check = document.createElement("button"); check.className = "check";
+    check.textContent = task.done ? "✓" : ""; check.setAttribute("aria-label", (task.done ? "Reopen " : "Complete ") + task.title);
+    check.setAttribute("aria-pressed", String(task.done));
+    check.addEventListener("click", () => act("toggle", {id: task.id}));
+    const title = document.createElement("span"); title.className = "task-title"; title.textContent = task.title;
+    const remove = document.createElement("button"); remove.className = "remove"; remove.textContent = "×";
+    remove.setAttribute("aria-label", "Delete " + task.title);
+    remove.addEventListener("click", () => act("delete", {id: task.id}));
+    row.append(check, title, remove); $("tasks").append(row);
+  });
+}
+async function act(action, body = {}) {
+  if (busy) return false;
+  generation++; setBusy(true); showError("");
+  $("trace-message").textContent = "Running " + action + "…";
+  try {
+    const result = await request("/api/" + action, body);
+    render(result.state);
+    $("trace-message").textContent = result.event.message;
+    $("trace").textContent = result.event.commands.join("\n");
+    $("trace-time").textContent = new Date().toLocaleTimeString();
+    return true;
+  } catch (error) {
+    showError(error.message);
+    $("trace-message").textContent = "Action did not complete successfully. Refresh state before retrying.";
+    $("trace").textContent = error.message;
+    return false;
+  } finally { setBusy(false); }
+}
+async function refresh() {
+  if (busy || polling) return;
+  polling = true; const started = generation;
+  try {
+    const state = await request("/api/state");
+    if (started === generation) render(state);
+  } catch (error) {
+    if (started === generation) {
+      $("connection").className = "status offline";
+      $("connection").textContent = "Database unavailable";
+      showError(error.message);
+    }
+  } finally { polling = false; }
+}
+$("task-form").addEventListener("submit", async event => {
+  event.preventDefault();
+  const input = $("title"), title = input.value.trim();
+  if (title && await act("add", {title})) { input.value = ""; input.focus(); }
+});
+document.querySelectorAll("[data-action]").forEach(button => {
+  button.addEventListener("click", () => act(button.dataset.action));
+});
+refresh(); setInterval(refresh, 1000);
+</script>
+</body>
+</html>

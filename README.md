@@ -62,6 +62,24 @@ For a scripted two-client, TTL, counter, forced-crash, transaction, and compacti
 demonstration, run `python scripts/demo.py --bin-dir build` (Windows: `build/Release`).
 It owns a temporary database and checks every result.
 
+## Interactive demo: ForgeBoard
+
+[ForgeBoard](examples/forgeboard/README.md) is a browser-based task dashboard backed
+by a dedicated ForgeDB instance. Add tasks, watch presence expire, send concurrent
+counter updates, crash and recover the database, and compact its log. Each action
+shows the commands and its result.
+
+After building ForgeDB, launch it from the repository root:
+
+```sh
+python examples/forgeboard/app.py
+```
+
+Open **http://127.0.0.1:8080**. It uses Python's standard library and requires no
+frontend build or extra packages. The board persists between launches in an
+ignored demo data directory. See the [demo guide](examples/forgeboard/README.md)
+for the feature tour, architecture, and tests.
+
 ## Implemented commands
 
 | Commands | Behavior |
