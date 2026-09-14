@@ -1,0 +1,23 @@
+[
+  {
+    "iterations": 100,
+    "frame_bytes": 76195,
+    "fragment_bytes": 64,
+    "total_ms": 3995.98,
+    "ms_per_frame": 39.9598
+  },
+  {
+    "iterations": 100,
+    "frame_bytes": 76195,
+    "fragment_bytes": 64,
+    "total_ms": 3978.11,
+    "ms_per_frame": 39.7811
+  },
+  {
+    "iterations": 100,
+    "frame_bytes": 76195,
+    "fragment_bytes": 64,
+    "total_ms": 4126.41,
+    "ms_per_frame": 41.2641
+  }
+]

@@ -1,0 +1,12 @@
+.git
+.tools
+build*
+data
+**/__pycache__
+benchmarks/results
+benchmarks/local*
+.local-build-archive
+docs/resume.md
+docs/validation
+.env
+.env.*

@@ -1,0 +1,89 @@
+{
+  "environment": {
+    "cpu": "Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz",
+    "logical_cpus": 12,
+    "memory_bytes": 17023844352,
+    "os": "Windows-11-10.0.26200-SP0",
+    "python": "3.13.1",
+    "timestamp_utc": "2026-09-14T03:14:09.420094+00:00"
+  },
+  "compiler": "MSVC 19.29.30157",
+  "build_mode": "Release",
+  "worker_threads": 4,
+  "transport": "IPv4 loopback, one outstanding command per client",
+  "latency": "closed-loop end-to-end including encoding and response parsing; excludes connection and seed; no coordinated-omission correction",
+  "results": [
+    {
+      "command": "MIXED",
+      "clients": 32,
+      "requests": 100000,
+      "value_bytes": 64,
+      "keyspace": 1000,
+      "seconds": 4.175692,
+      "ops_per_second": 23948.12931,
+      "mean_ms": 1.204655,
+      "p50_ms": 1.1358,
+      "p95_ms": 2.3358,
+      "p99_ms": 2.6259,
+      "errors": 0,
+      "error_rate": 0.0,
+      "policy": "everysec",
+      "repeat": 1,
+      "profile": {
+        "lock_wait_ns": 2504794400,
+        "execution_ns": 1954062600,
+        "aof_append_ns": 1443188200,
+        "total_commands": 101033,
+        "aof_syncs": 4
+      }
+    },
+    {
+      "command": "MIXED",
+      "clients": 32,
+      "requests": 100000,
+      "value_bytes": 64,
+      "keyspace": 1000,
+      "seconds": 4.37908,
+      "ops_per_second": 22835.845756,
+      "mean_ms": 1.258889,
+      "p50_ms": 1.1862,
+      "p95_ms": 2.4415,
+      "p99_ms": 2.8072,
+      "errors": 0,
+      "error_rate": 0.0,
+      "policy": "everysec",
+      "repeat": 2,
+      "profile": {
+        "lock_wait_ns": 2618293500,
+        "execution_ns": 2043050200,
+        "aof_append_ns": 1494968100,
+        "total_commands": 101033,
+        "aof_syncs": 4
+      }
+    },
+    {
+      "command": "MIXED",
+      "clients": 32,
+      "requests": 100000,
+      "value_bytes": 64,
+      "keyspace": 1000,
+      "seconds": 4.546994,
+      "ops_per_second": 21992.55253,
+      "mean_ms": 1.296601,
+      "p50_ms": 1.2208,
+      "p95_ms": 2.5009,
+      "p99_ms": 2.8887,
+      "errors": 0,
+      "error_rate": 0.0,
+      "policy": "everysec",
+      "repeat": 3,
+      "profile": {
+        "lock_wait_ns": 2702225200,
+        "execution_ns": 2121598100,
+        "aof_append_ns": 1553926900,
+        "total_commands": 101033,
+        "aof_syncs": 5
+      }
+    }
+  ]
+}

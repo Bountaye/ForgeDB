@@ -1,0 +1,68 @@
+name: build-and-test
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  linux:
+    runs-on: ubuntu-22.04
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - compiler: g++
+            sanitizer: ""
+            mode: Release
+          - compiler: clang++
+            sanitizer: ""
+            mode: Release
+          - compiler: clang++
+            sanitizer: address,undefined
+            mode: RelWithDebInfo
+          - compiler: clang++
+            sanitizer: thread
+            mode: RelWithDebInfo
+    env:
+      ASAN_OPTIONS: detect_leaks=1:halt_on_error=1
+      UBSAN_OPTIONS: halt_on_error=1:print_stacktrace=1
+      TSAN_OPTIONS: halt_on_error=1
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure
+        run: >-
+          cmake -S . -B build -G Ninja
+          -DCMAKE_CXX_COMPILER=${{ matrix.compiler }}
+          -DCMAKE_BUILD_TYPE=${{ matrix.mode }}
+          -DFORGEDB_SANITIZER=${{ matrix.sanitizer }}
+      - name: Build
+        run: cmake --build build --parallel 4
+      - name: Test
+        run: ctest --test-dir build --output-on-failure
+      - name: Preserve test diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: logs-${{ matrix.compiler }}-${{ matrix.sanitizer || 'release' }}
+          path: build/Testing/Temporary/
+  windows:
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v4
+      - run: cmake -S . -B build -A x64
+      - run: cmake --build build --config Release --parallel 4
+      - run: ctest --test-dir build -C Release --output-on-failure
+  container:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -t forgedb .
+      - name: Container smoke test
+        run: |
+          docker run -d --name forgedb-smoke forgedb
+          for attempt in $(seq 1 50); do
+            if docker exec forgedb-smoke forgedb-cli PING; then break; fi
+            sleep 0.1
+          done
+          docker exec forgedb-smoke forgedb-cli SET container works
+          test "$(docker exec forgedb-smoke forgedb-cli GET container)" = '"works"'
+          docker stop --time 10 forgedb-smoke
+          docker logs forgedb-smoke | grep 'Shutdown complete'
